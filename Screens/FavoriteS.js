@@ -1,10 +1,9 @@
-import MovieList from "../Components/MovieList";
 import { useContext, useEffect, useState } from "react";
 import { FavoriteContext } from "../store/context/Favorite-context";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import FavoriteMovieList from "../Components/FavoriteList";
 
-function FavoriteS() {
+function FavoriteS({navigation}) {
   const favoriteMoviesCtx = useContext(FavoriteContext);
   const [movies, setMovies] = useState([]);
   
@@ -16,7 +15,6 @@ function FavoriteS() {
         );
         const json = await response.json();
         setMovies(json.results);
-        // setFilteredMovies(json.results);
       } catch (error) {
         console.error(error);
       }
@@ -34,14 +32,32 @@ function FavoriteS() {
 
   if (favoritemovies.length === 0) {
     return (
-      <View >
-        <Text >You have no favorite movies yet.</Text>
+      <View style={styles.container}>
+      <Text style={styles.text}>You have no favorite movies yet.</Text>
       </View>
     );
   }
 
 
-  return <FavoriteMovieList item={favoritemovies} />;
-}
+  return(
+    <View style={styles.container}>
+      <FavoriteMovieList item={favoritemovies} navigation={navigation}/>
+      </View>
+  ) 
+};
 
 export default FavoriteS;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#1F1F1F",
+  },
+ 
+  text: {
+    color: "#fff",
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 20,
+  },
+});

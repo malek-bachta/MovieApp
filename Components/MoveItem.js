@@ -8,13 +8,13 @@ function MovieItem({ poster, title, onPress, rating, id }) {
 
   const movieIsFavorite = favoriteMoviesCtx.ids.includes(id);
 
-  const ChangeVavoriteHandler = () => {
-    if (movieIsFavorite) {
-      favoriteMoviesCtx.removeFavorite(id);
-    } else {
-      favoriteMoviesCtx.addFavorite(id);
-    }
-  };
+  // const ChangeVavoriteHandler = () => {
+  //   if (movieIsFavorite) {
+  //     favoriteMoviesCtx.removeFavorite(id);
+  //   } else {
+  //     favoriteMoviesCtx.addFavorite(id);
+  //   }
+  // };
   return (
     <View style={styles.gridItemContainer}>
       <View style={styles.gridItem}>

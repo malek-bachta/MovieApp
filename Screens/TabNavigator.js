@@ -12,7 +12,10 @@ function MyTabs() {
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: "#EE9B37",
         tabBarInactiveTintColor: "#60544C",
-        // tabBarBackground:()=>(<View style={{backgroundColor:"#000",position:"absolute",bottom:0,}}></View>)
+        tabBarStyle: {
+          backgroundColor: "#1F1F1F",
+          borderTopWidth: 0,
+        },
       })}
     >
       <Tab.Screen
@@ -35,7 +38,7 @@ function MyTabs() {
           headerTitle: "Favorite Movies",
           headerTitleAlign: "center",
           headerStyle: {
-            backgroundColor: "#000",
+            backgroundColor: "#1F1F1F",
           },
           headerTintColor: "#fff",
         }}
