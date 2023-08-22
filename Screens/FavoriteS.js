@@ -2,24 +2,12 @@ import MovieList from "../Components/MovieList";
 import { useContext, useEffect, useState } from "react";
 import { FavoriteContext } from "../store/context/Favorite-context";
 import { Text, View } from "react-native";
+import FavoriteMovieList from "../Components/FavoriteList";
 
 function FavoriteS() {
   const favoriteMoviesCtx = useContext(FavoriteContext);
   const [movies, setMovies] = useState([]);
-
-  const favoritemovies = movies.filter((movie) =>
-    favoriteMoviesCtx.ids.includes(movie.id)
-
-    );
-    console.log(favoriteMoviesCtx.ids);
-  if (favoritemovies.length === 0) {
-    return (
-      <View >
-        <Text >You have no favorite movies yet.</Text>
-      </View>
-    );
-  }
-
+  
   useEffect(() => {
     async function fetchMovies() {
       try {
@@ -28,7 +16,7 @@ function FavoriteS() {
         );
         const json = await response.json();
         setMovies(json.results);
-        setFilteredMovies(json.results);
+        // setFilteredMovies(json.results);
       } catch (error) {
         console.error(error);
       }
@@ -38,15 +26,22 @@ function FavoriteS() {
   }, []);
 
 
-  const {favouriteMovies,deleteFavourite } = useContext(MovieContext);  
- 
-  useEffect(() => {
-    if (isFocused) {
-      favouriteMovies
-    }
-  }, [isFocused]);
+  const favoritemovies = movies.filter((movie) =>
+    favoriteMoviesCtx.ids.includes(movie.id)
+    );
+    console.log("favoriteMoviesCtx.ids:", favoriteMoviesCtx.ids);
+    console.log("favoritemovies:", favoritemovies);
 
-  return <MovieList item={favoritemovies} />;
+  if (favoritemovies.length === 0) {
+    return (
+      <View >
+        <Text >You have no favorite movies yet.</Text>
+      </View>
+    );
+  }
+
+
+  return <FavoriteMovieList item={favoritemovies} />;
 }
 
 export default FavoriteS;

@@ -95,6 +95,9 @@ function Details({ route }) {
                 <View style={styles.release_date}>
                   <Text style={styles.other}>{popularity}</Text>
                 </View>
+                <View style={styles.release_date}>
+                  <Text style={styles.other}>{movieId}</Text>
+                </View>
               </View>
               <View style={{ flex: 7 }}>
                 <Text style={styles.vote_count}>{overview}</Text>

@@ -30,16 +30,16 @@ function MovieItem({ poster, title, onPress, rating, id }) {
               <Icon name="star" size={20} color="#CCB802" />
               <Text style={styles.ratingText}>{rating}</Text>
             </View>
-            <View style={styles.iconContainer}>
-              {/* <TouchableOpacity>
+            {/* <View style={styles.iconContainer}>
+              <TouchableOpacity>
                 <Icon
                   name={movieIsFavorite ? "heart" : "heart-o"}
                   size={20}
                   color="#E04E1B"
                   onPress={ChangeVavoriteHandler}
                 />
-              </TouchableOpacity> */}
-            </View>
+              </TouchableOpacity>
+            </View> */}
           </View>
         </TouchableOpacity>
         <Text style={styles.title}>{title}</Text>

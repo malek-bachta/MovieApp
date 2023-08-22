@@ -32,7 +32,12 @@ function MyTabs() {
           tabBarIcon: ({ color, size }) => (
             <Icon name="heart" color={color} size={size} />
           ),
-          headerShown: false,
+          headerTitle: "Favorite Movies",
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: "#000",
+          },
+          headerTintColor: "#fff",
         }}
       />
     </Tab.Navigator>
