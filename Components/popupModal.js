@@ -1,17 +1,21 @@
-import React from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from "react";
+import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const FavoriteModal = ({ isVisible, message, onClose }) => {
+const FavoriteModal = ({ isVisible, message, onClose, close }) => {
   return (
     <Modal visible={isVisible} animationType="fade" transparent>
-      <View style={styles.modalContainer}>
+      <TouchableOpacity
+        style={styles.modalContainer}
+        activeOpacity={1}
+        onPress={() => { close() }}
+      >
         <View style={styles.modalContent}>
           <Text style={styles.modalText}>{message}</Text>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text>Close</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 };
@@ -19,12 +23,12 @@ const FavoriteModal = ({ isVisible, message, onClose }) => {
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 5,
   },
@@ -34,7 +38,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 10,
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
   },
 });
 

@@ -30,14 +30,16 @@ function Details({ route }) {
   const navigation = useNavigation();
   const movieIsFavorite = favoriteMoviesCtx.ids.includes(movieId);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleGoBack = () => {
     navigation.goBack();
   };
 
- 
-  
+  function closeModal() {
+    setModalVisible(false);
+  }
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -45,17 +47,14 @@ function Details({ route }) {
   const ChangeVavoriteHandler = () => {
     if (movieIsFavorite) {
       favoriteMoviesCtx.removeFavorite(movieId);
-      setModalMessage('Movie removed from favorites');
+      setModalMessage("Movie removed from favorites");
     } else {
       favoriteMoviesCtx.addFavorite(movieId);
-      setModalMessage('Movie added to favorites');
+      setModalMessage("Movie added to favorites");
     }
 
     toggleModal();
   };
-
-  
-
 
   return (
     <>
@@ -79,7 +78,12 @@ function Details({ route }) {
               onPress={ChangeVavoriteHandler}
             />
           </TouchableOpacity>
-          <FavoriteModal isVisible={isModalVisible} message={modalMessage} onClose={toggleModal} />
+          <FavoriteModal
+            isVisible={isModalVisible}
+            message={modalMessage}
+            onClose={toggleModal}
+            close={closeModal}
+          />
           <View style={styles.detailContainer}>
             <ScrollView>
               <View style={styles.rating}>
