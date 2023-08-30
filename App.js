@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <FavoriteContextProvider>
         <NavigationContainer>
           <Stack.Navigator>

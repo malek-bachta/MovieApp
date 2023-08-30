@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import MovieItem from "./MoveItem";
 import SearchInput from "./SearchInput";
+import { useNavigation } from "@react-navigation/native";
 
-function MovieList({ navigation }) {
+
+function MovieList() {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const navigation = useNavigation();
+
 
   useEffect(() => {
     async function fetchMovies() {
@@ -24,6 +28,7 @@ function MovieList({ navigation }) {
     fetchMovies();
   }, []);
 
+
   const handleSearch = (searchText) => {
     const filtered = movies.filter((movie) =>
       movie.original_title.toLowerCase().includes(searchText.toLowerCase())
@@ -34,15 +39,7 @@ function MovieList({ navigation }) {
   const RenderMovieItem = ({ item }) => {
     const handlePress = () => {
       navigation.navigate("Details", {
-        movieId: item.id,
-        img: item.poster_path,
-        language: item.original_language,
-        title: item.original_title,
-        overview: item.overview,
-        popularity: item.popularity,
-        release_date: item.release_date,
-        vote_average: item.vote_average,
-        vote_count: item.vote_count,
+       item
       });
     };
 
@@ -62,8 +59,9 @@ function MovieList({ navigation }) {
       <SearchInput onSearch={handleSearch} />
       <FlatList
         data={filteredMovies}
-        keyExtractor={(item) => item.id.toString()}
+        // keyExtractor={(item) => item.id.toString()}
         numColumns={2}
+        contentContainerStyle={styles.listContainer}
         renderItem={RenderMovieItem}
       />
     </View>
@@ -78,6 +76,10 @@ const styles = StyleSheet.create({
     width: 180,
     height: 190,
     margin: 10,
+  },
+  listContainer: {
+    paddingHorizontal: 10,  
+    paddingBottom: 50, 
   },
 });
 

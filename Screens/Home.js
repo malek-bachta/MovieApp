@@ -4,13 +4,13 @@ import MovieList from "../Components/MovieList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FavoriteContextProvider from "../store/context/Favorite-context";
 
-function Home({ navigation }) {
+function Home() {
   return (
     <>
       <FavoriteContextProvider>
         <SafeAreaView style={styles.container}>
           <View style={styles.homeContainer}>
-            <MovieList navigation={navigation} />
+            <MovieList />
           </View>
         </SafeAreaView>
       </FavoriteContextProvider>

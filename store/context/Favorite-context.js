@@ -9,6 +9,7 @@ export const FavoriteContext = createContext({
 function FavoriteContextProvider({ children }) {
   const [favoriteMovieIds, setFavoriteMovieIds] = useState([]);
 
+
   function addFavorite(id) {
     setFavoriteMovieIds((currentFavIds) => [...currentFavIds, id]);
   }

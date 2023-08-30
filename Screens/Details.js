@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   ImageBackground,
   ScrollView,
@@ -9,28 +9,46 @@ import {
   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { FavoriteContext } from "../store/context/Favorite-context";
 import FavoriteModal from "../Components/popupModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Details({ route }) {
-  const favoriteMoviesCtx = useContext(FavoriteContext);
+  
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isFavourite, setIsFavourite] = useState(false);
 
   const {
-    movieId,
-    img,
-    title,
-    language,
+    id,
+    poster_path,
+    original_language,
+    original_title,
     overview,
     popularity,
     release_date,
     vote_average,
     vote_count,
-  } = route.params;
+  } = route.params.item;
 
   const navigation = useNavigation();
-  const movieIsFavorite = favoriteMoviesCtx.ids.includes(movieId);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const storedMovies = await AsyncStorage.getItem("FavoriteMovies");
+        if (storedMovies) {
+          const parsedMovies = JSON.parse(storedMovies);
+          const isExist = parsedMovies.find((movie) => movie.id === id);
+          if (isExist) {
+            setIsFavourite(true);
+          }
+        }
+      } catch (error) {
+        console.log("Error retrieving data:", error);
+      }
+    })();
+  }, []);
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -44,12 +62,32 @@ function Details({ route }) {
     setModalVisible(!isModalVisible);
   };
 
-  const ChangeVavoriteHandler = () => {
-    if (movieIsFavorite) {
-      favoriteMoviesCtx.removeFavorite(movieId);
+  const ChangeFavoriteHandler = async () => {
+    if (isFavourite) {
+      setIsFavourite(false);
       setModalMessage("Movie removed from favorites");
+      try {
+        const favouritList = await AsyncStorage.getItem("FavoriteMovies");
+        const favouritListParsed = JSON.parse(favouritList);
+        const filtered = favouritListParsed.filter((movie) => movie.id !== id);
+        await AsyncStorage.setItem("FavoriteMovies", JSON.stringify(filtered));
+      } catch (error) {
+        console.log("Error storing favorite movies:", error);
+      }
     } else {
-      favoriteMoviesCtx.addFavorite(movieId);
+      setIsFavourite(true);
+      try {
+        const favouritList = await AsyncStorage.getItem("FavoriteMovies");
+        const favouritListParsed = JSON.parse(favouritList) || [];
+        console.log({ favouritListParsed: favouritListParsed.length });
+        favouritListParsed.push(route.params.item);
+        await AsyncStorage.setItem(
+          "FavoriteMovies",
+          JSON.stringify(favouritListParsed)
+        );
+      } catch (error) {
+        console.log("Error storing favorite movies:", error);
+      }
       setModalMessage("Movie added to favorites");
     }
 
@@ -62,7 +100,7 @@ function Details({ route }) {
         {/* <SafeAreaView style={styles.container}> */}
         <ImageBackground
           source={{
-            uri: `https://image.tmdb.org/t/p/w500${img}`,
+            uri: `https://image.tmdb.org/t/p/w500${poster_path}`,
           }}
           style={styles.backgroundImage}
           resizeMode="stretch"
@@ -72,10 +110,10 @@ function Details({ route }) {
           </TouchableOpacity>
           <TouchableOpacity style={styles.favorite}>
             <Icon
-              name={movieIsFavorite ? "heart" : "heart-o"}
+              name={isFavourite ? "heart" : "heart-o"}
               size={40}
               color="#E04E1B"
-              onPress={ChangeVavoriteHandler}
+              onPress={ChangeFavoriteHandler}
             />
           </TouchableOpacity>
           <FavoriteModal
@@ -91,8 +129,8 @@ function Details({ route }) {
                 <Text style={styles.ratingText}>{vote_average}</Text>
                 <Text style={styles.vote_count}> ( {vote_count} reviews )</Text>
               </View>
-              <Text style={styles.title}>{title} </Text>
-              <View style={{ flex: 1, flexDirection: "row" }}>
+              <Text style={styles.title}>{original_title} </Text>
+              <ScrollView horizontal style={{ flex: 1, flexDirection: "row" }}>
                 <View style={styles.release_date}>
                   <Text style={styles.other}>{release_date}</Text>
                 </View>
@@ -100,10 +138,13 @@ function Details({ route }) {
                   <Text style={styles.other}>{popularity}</Text>
                 </View>
                 <View style={styles.release_date}>
-                  <Text style={styles.other}>{movieId}</Text>
+                  <Text style={styles.other}>{original_language}</Text>
                 </View>
-              </View>
-              <View style={{ flex: 7 }}>
+                {/* <View style={styles.release_date}>
+                  <Text style={styles.other}>{id}</Text>
+                </View> */}
+              </ScrollView>
+              <View style={{ flex: 7, marginTop:10,fontSize:14, }}>
                 <Text style={styles.vote_count}>{overview}</Text>
               </View>
             </ScrollView>

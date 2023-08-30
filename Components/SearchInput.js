@@ -7,7 +7,6 @@ function SearchInput({ onSearch }) {
 
   function addToDoHandler() {
     onSearch(searchText);
-    setSearchText("");
   }
 
   function search(text)
@@ -18,7 +17,6 @@ function SearchInput({ onSearch }) {
   
   function handleSearchButtonPress() {
     onSearch(searchText);
-    setSearchText("");
 
   }
 
@@ -31,7 +29,7 @@ function SearchInput({ onSearch }) {
         onChangeText={(text)=>search(text)}
         
         onSubmitEditing={handleSearchButtonPress} 
-        returnKeyType="search" // Display "Search" button on the keyboard
+        returnKeyType="search" 
       />
       <TouchableOpacity style={styles.addButton} onPress={addToDoHandler}>
         <Iconn name="search" size={20} color="#EE9B37" />

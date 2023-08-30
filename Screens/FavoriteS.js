@@ -1,63 +1,70 @@
-import { useContext, useEffect, useState } from "react";
-import { FavoriteContext } from "../store/context/Favorite-context";
-import { StyleSheet, Text, View } from "react-native";
-import FavoriteMovieList from "../Components/FavoriteList";
+  import { useContext, useEffect, useState } from "react";
+  // import { FavoriteContext } from "../store/context/Favorite-context";
+  import { StyleSheet, Text, View } from "react-native";
+  import FavoriteMovieList from "../Components/FavoriteList";
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+  import { useIsFocused, useNavigation } from "@react-navigation/native";
 
-function FavoriteS({navigation}) {
-  const favoriteMoviesCtx = useContext(FavoriteContext);
-  const [movies, setMovies] = useState([]);
-  
-  useEffect(() => {
-    async function fetchMovies() {
-      try {
-        const response = await fetch(
-          "https://api.themoviedb.org/3/movie/top_rated?page=1&api_key=afa1011726231b0cbda17f170b31cbed"
-        );
-        const json = await response.json();
-        setMovies(json.results);
-      } catch (error) {
-        console.error(error);
+
+  function FavoriteS() {
+    // const favoriteMoviesCtx = useContext(FavoriteContext);
+    const [movies, setMovies] = useState([]);
+
+    const navigation = useNavigation();
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+      console.log('enter=========');
+      async function fetchFavoriteMovies() {
+        try {
+          const storedFavoriteMovies = await AsyncStorage.getItem(
+            "FavoriteMovies"
+          );
+          if (storedFavoriteMovies) {
+            const parsedFavoriteMovies = JSON.parse(storedFavoriteMovies);
+            console.log({ parsedFavoriteMovies });
+            setMovies(parsedFavoriteMovies);
+          }
+        } catch (error) {
+          console.log("Error fetching favorite movies:", error);
+        }
       }
+      fetchFavoriteMovies();
+    }, [isFocused]);
+
+    // const favoritemovies = movies.filter((movie) =>
+    //   favoriteMoviesCtx.ids.includes(movie.id)
+    // );
+    // console.log("favoriteMoviesCtx.ids:", favoriteMoviesCtx.ids);
+
+    if (movies.length === 0) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.text}>You have no favorite movies yet.</Text>
+        </View>
+      );
     }
 
-    fetchMovies();
-  }, []);
-
-
-  const favoritemovies = movies.filter((movie) =>
-    favoriteMoviesCtx.ids.includes(movie.id)
-    );
-    console.log("favoriteMoviesCtx.ids:", favoriteMoviesCtx.ids);
-    console.log("favoritemovies:", favoritemovies);
-
-  if (favoritemovies.length === 0) {
     return (
       <View style={styles.container}>
-      <Text style={styles.text}>You have no favorite movies yet.</Text>
+        <FavoriteMovieList item={movies} navigation={navigation} />
       </View>
     );
   }
 
+  export default FavoriteS;
 
-  return(
-    <View style={styles.container}>
-      <FavoriteMovieList item={favoritemovies} navigation={navigation}/>
-      </View>
-  ) 
-};
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#1F1F1F",
+      justifyContent: 'center',
+    },
 
-export default FavoriteS;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#1F1F1F",
-  },
- 
-  text: {
-    color: "#fff",
-    fontSize: 20,
-    textAlign: "center",
-    marginTop: 20,
-  },
-});
+    text: {
+      color: "#fff",
+      fontSize: 20,
+      textAlign: "center",
+      marginTop: 20,
+    },
+  });
