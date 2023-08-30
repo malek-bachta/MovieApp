@@ -1,60 +1,11 @@
 import React, { useContext } from "react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { FavoriteContext } from "../store/context/Favorite-context";
-
 
 function MovieItem({ poster, title, onPress, rating, id }) {
   const favoriteMoviesCtx = useContext(FavoriteContext);
   const movieIsFavorite = favoriteMoviesCtx.ids.includes(id);
-
-
-  // function closeModal() {
-  //   setModalVisible(false);
-  // }
-
-  // const toggleModal = () => {
-  //   setModalVisible(!isModalVisible);
-  // };
-
-  // const ChangeFavoriteHandler = async () => {
-  //   if (isFavourite) {
-  //     setIsFavourite(false);
-  //     setModalMessage("Movie removed from favorites");
-  //     try {
-  //       const favouritList = await AsyncStorage.getItem("FavoriteMovies");
-  //       const favouritListParsed = JSON.parse(favouritList);
-  //       const filtered = favouritListParsed.filter((movie) => movie.id !== id);
-  //       await AsyncStorage.setItem("FavoriteMovies", JSON.stringify(filtered));
-  //     } catch (error) {
-  //       console.log("Error storing favorite movies:", error);
-  //     }
-  //   } else {
-  //     setIsFavourite(true);
-  //     try {
-  //       const favouritList = await AsyncStorage.getItem("FavoriteMovies");
-  //       const favouritListParsed = JSON.parse(favouritList) || [];
-  //       console.log({ favouritListParsed: favouritListParsed.length });
-  //       favouritListParsed.push(route.params.item);
-  //       await AsyncStorage.setItem(
-  //         "FavoriteMovies",
-  //         JSON.stringify(favouritListParsed)
-  //       );
-  //     } catch (error) {
-  //       console.log("Error storing favorite movies:", error);
-  //     }
-  //     setModalMessage("Movie added to favorites");
-  //   }
-
-  //   toggleModal();
-  // };
-
 
   return (
     <View style={styles.gridItemContainer}>
@@ -71,16 +22,6 @@ function MovieItem({ poster, title, onPress, rating, id }) {
               <Icon name="star" size={20} color="#CCB802" />
               <Text style={styles.ratingText}>{rating}</Text>
             </View>
-            {/* <View style={styles.iconContainer}>
-              <TouchableOpacity>
-                <Icon
-                  name={movieIsFavorite ? "heart" : "heart-o"}
-                  size={20}
-                  color="#E04E1B"
-                  onPress={ChangeFavoriteHandler}
-                />
-              </TouchableOpacity>
-            </View> */}
           </View>
         </TouchableOpacity>
         <Text style={styles.title}>{title}</Text>
@@ -91,9 +32,9 @@ function MovieItem({ poster, title, onPress, rating, id }) {
 
 const styles = StyleSheet.create({
   gridItemContainer: {
-    width: "50%", // Take half of the container's width (since there are two columns)
-    paddingHorizontal: 5, // Add horizontal padding
-    marginBottom: 20, // Adjust bottom margin
+    width: "50%",
+    paddingHorizontal: 5,
+    marginBottom: 20,
     marginTop: 20,
     height: 280,
   },
