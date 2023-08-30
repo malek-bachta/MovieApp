@@ -1,9 +1,11 @@
-import { FlatList, StyleSheet } from "react-native";
+import { Dimensions, FlatList, StyleSheet } from "react-native";
 
 import MovieItem from "./MoveItem";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function FavoriteMovieList({ navigation, item }) {
+  const windowWidth = Dimensions.get("window").width;
+
   const RenderMovieItem = ({ item }) => {
     const handlePress = () => {
       navigation.navigate("Details", {
@@ -27,7 +29,7 @@ function FavoriteMovieList({ navigation, item }) {
       <FlatList
         data={item}
         keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
+        numColumns={Math.floor(windowWidth / 180)} 
         contentContainerStyle={styles.listContainer}
         renderItem={RenderMovieItem}
       />

@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { FavoriteContext } from "../store/context/Favorite-context";
 
@@ -9,38 +16,42 @@ function MovieItem({ poster, title, onPress, rating, id }) {
 
   return (
     <View style={styles.gridItemContainer}>
-      <View style={styles.gridItem}>
-        <TouchableOpacity onPress={onPress}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500${poster}`,
-              }}
-              style={styles.Image}
-            />
-            <View style={styles.rating}>
-              <Icon name="star" size={20} color="#CCB802" />
-              <Text style={styles.ratingText}>{rating}</Text>
-            </View>
+      {/* <View style={styles.gridItem}> */}
+      <TouchableOpacity onPress={onPress} style={styles.gridItem}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={{
+              uri: `https://image.tmdb.org/t/p/w500${poster}`,
+            }}
+            style={styles.Image}
+          />
+          <View style={styles.rating}>
+            <Icon name="star" size={20} color="#CCB802" />
+            <Text style={styles.ratingText}>{rating}</Text>
           </View>
-        </TouchableOpacity>
-        <Text style={styles.title}>{title}</Text>
-      </View>
+        </View>
+      </TouchableOpacity>
+      <Text style={styles.title}>{title}</Text>
+      {/* </View> */}
     </View>
   );
 }
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   gridItemContainer: {
-    width: "50%",
+    // width: "90%",
     paddingHorizontal: 5,
-    marginBottom: 20,
-    marginTop: 20,
-    height: 280,
+    // marginBottom: 20,
+    // marginTop: 20,
+    // height: 280,
+    flex: 0.5,
+    maxWidth: "50%",
   },
 
   gridItem: {
     flex: 1,
+    // width:width /é,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 0,
@@ -53,15 +64,16 @@ const styles = StyleSheet.create({
   },
 
   Image: {
-    flex: 1,
-    resizeMode: "contain",
-    width: 180,
+    maxWidth: "100%",
+    minWidth: 160,
     height: 190,
     margin: 10,
+    resizeMode: "contain",
     borderColor: "#EE9B37",
     borderWidth: 1,
     borderRadius: 20,
   },
+  
 
   title: {
     fontSize: 18,
@@ -75,7 +87,7 @@ const styles = StyleSheet.create({
   rating: {
     position: "absolute",
     top: 20,
-    left: 134,
+    left: 120,
     flexDirection: "row",
   },
   ratingText: {

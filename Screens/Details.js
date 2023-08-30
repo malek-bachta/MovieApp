@@ -13,8 +13,6 @@ import FavoriteModal from "../Components/popupModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Details({ route }) {
-  
-
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
@@ -96,15 +94,16 @@ function Details({ route }) {
 
   return (
     <>
-      <View style={styles.container}>
-        {/* <SafeAreaView style={styles.container}> */}
-        <ImageBackground
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${poster_path}`,
-          }}
-          style={styles.backgroundImage}
-          resizeMode="stretch"
-        >
+      {/* <View style={styles.container}> */}
+      {/* <SafeAreaView style={styles.container}> */}
+      <ImageBackground
+        source={{
+          uri: `https://image.tmdb.org/t/p/w500${poster_path}`,
+        }}
+        style={styles.backgroundImage}
+        resizeMode="stretch"
+      >
+        <View style={{ flexDirection: "row", margin: 20, flex: 1 }}>
           <TouchableOpacity style={styles.arrowBack} onPress={handleGoBack}>
             <Icon name="long-arrow-left" size={30} color="#EE9B37" />
           </TouchableOpacity>
@@ -116,42 +115,44 @@ function Details({ route }) {
               onPress={ChangeFavoriteHandler}
             />
           </TouchableOpacity>
+
           <FavoriteModal
             isVisible={isModalVisible}
             message={modalMessage}
             onClose={toggleModal}
             close={closeModal}
           />
-          <View style={styles.detailContainer}>
-            <ScrollView>
-              <View style={styles.rating}>
-                <Icon name="star" size={20} color="#CCB802" />
-                <Text style={styles.ratingText}>{vote_average}</Text>
-                <Text style={styles.vote_count}> ( {vote_count} reviews )</Text>
+        </View>
+        <View style={styles.detailContainer}>
+          <ScrollView>
+            <View style={styles.rating}>
+              <Icon name="star" size={20} color="#CCB802" />
+              <Text style={styles.ratingText}>{vote_average}</Text>
+              <Text style={styles.vote_count}> ( {vote_count} reviews )</Text>
+            </View>
+            <Text style={styles.title}>{original_title} </Text>
+            <ScrollView horizontal style={{ flex: 1, flexDirection: "row" }}>
+              <View style={styles.release_date}>
+                <Text style={styles.other}>{release_date}</Text>
               </View>
-              <Text style={styles.title}>{original_title} </Text>
-              <ScrollView horizontal style={{ flex: 1, flexDirection: "row" }}>
-                <View style={styles.release_date}>
-                  <Text style={styles.other}>{release_date}</Text>
-                </View>
-                <View style={styles.release_date}>
-                  <Text style={styles.other}>{popularity}</Text>
-                </View>
-                <View style={styles.release_date}>
-                  <Text style={styles.other}>{original_language}</Text>
-                </View>
-                {/* <View style={styles.release_date}>
+              <View style={styles.release_date}>
+                <Text style={styles.other}>{popularity}</Text>
+              </View>
+              <View style={styles.release_date}>
+                <Text style={styles.other}>{original_language}</Text>
+              </View>
+              {/* <View style={styles.release_date}>
                   <Text style={styles.other}>{id}</Text>
                 </View> */}
-              </ScrollView>
-              <View style={{ flex: 7, marginTop:10,fontSize:14, }}>
-                <Text style={styles.vote_count}>{overview}</Text>
-              </View>
             </ScrollView>
-          </View>
-        </ImageBackground>
-        {/* </SafeAreaView> */}
-      </View>
+            <View style={{ flex: 7, marginTop: 10, fontSize: 14 }}>
+              <Text style={styles.vote_count}>{overview}</Text>
+            </View>
+          </ScrollView>
+        </View>
+      </ImageBackground>
+      {/* </SafeAreaView> */}
+      {/* </View> */}
     </>
   );
 }
@@ -173,7 +174,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     padding: 20,
-    marginTop: 420,
   },
   title: {
     fontSize: 20,
@@ -213,13 +213,15 @@ const styles = StyleSheet.create({
   },
 
   arrowBack: {
-    position: "absolute",
-    top: 40,
-    left: 20,
+    flex: 7,
+    // position: "absolute",
+    // top: 40,
+    // left: 20,
   },
   favorite: {
-    position: "absolute",
-    top: 70,
-    left: 340,
+    flex: 1,
+    // position: "absolute",
+    // top: 70,
+    // left: 340,
   },
 });
