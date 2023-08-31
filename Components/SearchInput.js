@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
-import Iconn from "react-native-vector-icons/Feather";
+import Icon from "react-native-vector-icons/Octicons";
 
 function SearchInput({ onSearch }) {
   const [searchText, setSearchText] = useState("");
@@ -32,7 +32,7 @@ function SearchInput({ onSearch }) {
         returnKeyType="search" 
       />
       <TouchableOpacity style={styles.addButton} onPress={addToDoHandler}>
-        <Iconn name="search" size={20} color="#EE9B37" />
+        <Icon name="search" size={20} color="#EE9B37" />
       </TouchableOpacity>
     </View>
   );
