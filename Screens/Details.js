@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Octicons";
+import Iconn from "react-native-vector-icons/FontAwesome";
+
 import FavoriteModal from "../Components/popupModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -105,11 +107,11 @@ function Details({ route }) {
       >
         <View style={{ flexDirection: "row", margin: 20, flex: 1 }}>
           <TouchableOpacity style={styles.arrowBack} onPress={handleGoBack}>
-            <Icon name="long-arrow-left" size={30} color="#EE9B37" />
+            <Iconn name="long-arrow-left" size={30} color="#EE9B37" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.favorite}>
             <Icon
-              name={isFavourite ? "heart" : "heart-o"}
+              name={isFavourite ? "heart" : "heart-fill"}
               size={40}
               color="#E04E1B"
               onPress={ChangeFavoriteHandler}
@@ -126,7 +128,7 @@ function Details({ route }) {
         <View style={styles.detailContainer}>
           <ScrollView>
             <View style={styles.rating}>
-              <Icon name="star" size={20} color="#CCB802" />
+              <Icon name="star-fill" size={20} color="#CCB802" />
               <Text style={styles.ratingText}>{vote_average}</Text>
               <Text style={styles.vote_count}> ( {vote_count} reviews )</Text>
             </View>

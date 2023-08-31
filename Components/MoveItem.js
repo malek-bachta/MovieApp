@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Octicons";
 import { FavoriteContext } from "../store/context/Favorite-context";
 
 function MovieItem({ poster, title, onPress, rating, id }) {
@@ -26,7 +26,7 @@ function MovieItem({ poster, title, onPress, rating, id }) {
             style={styles.Image}
           />
           <View style={styles.rating}>
-            <Icon name="star" size={20} color="#CCB802" />
+            <Icon name="star-fill" size={20} color="#CCB802" />
             <Text style={styles.ratingText}>{rating}</Text>
           </View>
         </View>
