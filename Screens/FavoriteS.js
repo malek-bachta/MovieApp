@@ -4,6 +4,7 @@
   import FavoriteMovieList from "../Components/FavoriteList";
   import AsyncStorage from '@react-native-async-storage/async-storage';
   import { useIsFocused, useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Entypo";
 
 
   function FavoriteS() {
@@ -40,10 +41,17 @@
     if (movies.length === 0) {
       return (
         <View style={styles.container}>
+          <Icon 
+            name="emoji-sad"
+            size={100}
+            color="#EE9B37"
+            style={{ alignSelf: "center" }}
+          />
           <Text style={styles.text}>You have no favorite movies yet.</Text>
         </View>
       );
     }
+  
 
     return (
       <View style={styles.container}>

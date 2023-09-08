@@ -111,7 +111,7 @@ function Details({ route }) {
           </TouchableOpacity>
           <TouchableOpacity style={styles.favorite}>
             <Icon
-              name={isFavourite ? "heart" : "heart-fill"}
+              name={isFavourite ? "heart-fill" : "heart"}
               size={40}
               color="#E04E1B"
               onPress={ChangeFavoriteHandler}

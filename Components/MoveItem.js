@@ -31,7 +31,7 @@ function MovieItem({ poster, title, onPress, rating, id }) {
           </View>
         </View>
       </TouchableOpacity>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title} adjustsFontSizeToFit >{title}</Text>
       {/* </View> */}
     </View>
   );
@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
   
 
   title: {
-    fontSize: 18,
+    fontSize: 15,
+    
     color: "#fff",
     textAlign: "center",
     fontWeight: "bold",
